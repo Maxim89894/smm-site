@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ARI / RIVELIYA — Head of SMM и контент-продюсер | Соцсети как система, а не посты</title>
+<meta name="description" content="Head of SMM и контент-продюсер: 5 лет опыта, бюджеты $500k. Строю узнаваемые системы для соцсетей: код бренда, контент-стратегия,  Influencer Marketing." />
+<meta property="og:title" content="ARI / RIVELIYA — Head of SMM и контент-продюсер" />
+<meta property="og:description" content="Соцсети, которые узнают без логотипа." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<!--
+  КАК ДОБАВИТЬ ФОТО И ВИДЕО
+  Положите файлы в папку media рядом с этим файлом. Имена по умолчанию:
+    media/hero.mp4 (+ media/hero.jpg как постер)   — главное видео
+    media/case-1.mp4 … case-4.mp4 (или .jpg)        — кейсы
+    media/reel-1.mp4 … reel-6.mp4 (или .jpg)        — лента контента (вертикальные 9:16)
+    media/before.jpg, media/after.jpg               — слайдер «Было / Стало»
+    media/ari.jpg                                   — портрет
+  Другое имя или формат: поменяйте атрибут data-src у нужного блока class="media".
+  Пока файла нет, показывается аккуратная заглушка.
+-->
+
+<style>
+  :root{
+    --bg:#E8E0D5;
+    --ink:#4A3C34;
+    --accent:#3E4A21;
+    --sand:#D9CFC1;
+    --sand-deep:#C9BCAA;
+    --line:rgba(74,60,52,.18);
+    --muted:#695D54;
+    --radius:6px;
+    --ease:cubic-bezier(.22,1,.36,1);
+    --gutter:clamp(16px,3vw,40px);
+    --section:clamp(72px,10vw,140px);
+    --serif:'Cormorant Garamond','Cormorant',Georgia,'Times New Roman',serif;
+    --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:72px}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,h4{font-weight:500;line-height:1.08}
+  h1,h2{font-family:var(--serif);letter-spacing:-.015em;text-wrap:balance}
+  h1{font-size:clamp(2.9rem,8vw,7rem);line-height:1;max-width:15em}
+  h2{font-size:clamp(2.1rem,4.4vw,3.8rem);max-width:20em}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  img,video{display:block;max-width:100%}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  .wrap{max-width:1440px;margin:0 auto;padding:0 var(--gutter)}
+  .section{padding-block:var(--section)}
+  .muted{color:var(--muted)}
+
+  /* Buttons */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:999px;border:1px solid transparent;font-size:14px;font-weight:500;white-space:nowrap;transition:background .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease)}
+  .btn-primary{background:var(--ink);color:var(--bg)}
+  .btn-primary:hover{background:var(--accent)}
+  .btn-ghost{border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--ink)}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:50;background:rgba(232,224,213,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .logo{font-family:var(--serif);font-size:23px;font-weight:600;letter-spacing:.01em}
+  .logo span{color:var(--accent)}
+  .nav-links{display:flex;gap:32px}
+  .nav-links a{font-size:14px;color:var(--muted);transition:color .2s}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-right{display:flex;align-items:center;gap:16px}
+  .lang{display:flex;gap:2px;font-size:12px;font-weight:500}
+  .lang button{padding:6px 8px;border-radius:999px;color:var(--muted)}
+  .lang button[aria-pressed="true"]{color:var(--bg);background:var(--ink)}
+  .burger{display:none;width:40px;height:40px;position:relative}
+  .burger span,.burger span::before{content:"";position:absolute;left:10px;right:10px;height:1.5px;background:var(--ink);transition:transform .3s var(--ease)}
+  .burger span{top:19px}
+  .burger span::before{left:0;right:0;top:-6px;box-shadow:0 12px 0 var(--ink)}
+  .burger[aria-expanded="true"] span{background:transparent}
+  .burger[aria-expanded="true"] span::before{box-shadow:none;transform:translateY(6px) rotate(45deg)}
+  .burger[aria-expanded="true"] span::after{content:"";position:absolute;left:0;right:0;height:1.5px;background:var(--ink);transform:rotate(-45deg)}
+  .menu{position:fixed;inset:64px 0 0 0;z-index:45;background:var(--bg);padding:32px var(--gutter);display:flex;flex-direction:column;gap:6px}
+  .menu[hidden]{display:none}
+  .menu a{font-family:var(--serif);font-size:2.2rem;font-weight:500;padding:8px 0;border-bottom:1px solid var(--line)}
+  @media (max-width:900px){
+    .nav-links,.nav-right .btn{display:none}
+    .burger{display:block}
+  }
+
+  /* Media blocks (photo + video) */
+  .media{position:relative;overflow:hidden;border-radius:var(--radius);background:var(--sand)}
+  .media>img,.media>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s var(--ease)}
+  .media.loaded>img,.media.loaded>video{opacity:1}
+  .media.loaded[data-box]{cursor:zoom-in}
+  .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;text-align:center;font-size:12px;color:var(--muted);background:linear-gradient(135deg,var(--sand) 0%,#E4DCCF 55%,var(--sand-deep) 100%)}
+  .media.loaded .ph{display:none}
+  .ph-icon{position:relative;width:44px;height:44px;border:1px solid rgba(74,60,52,.35);border-radius:50%}
+  .ph-icon::before,.ph-icon::after{content:"";position:absolute;background:rgba(74,60,52,.5)}
+  .ph-icon::before{left:21px;top:14px;width:1.5px;height:15px}
+  .ph-icon::after{left:14px;top:21px;width:15px;height:1.5px}
+  .ph-icon.is-video::before,.ph-icon.is-video::after{background:none}
+  .ph-icon.is-video::before{left:17px;top:13px;width:0;height:0;border-style:solid;border-width:8px 0 8px 13px;border-color:transparent transparent transparent rgba(74,60,52,.55)}
+  .r-hero{aspect-ratio:16/9}
+  .r-169{aspect-ratio:16/9}
+  .r-45{aspect-ratio:4/5}
+  .r-916{aspect-ratio:9/16}
+  @media (max-width:700px){ .r-hero{aspect-ratio:4/5} }
+
+  /* Hero */
+  .hero{padding:clamp(40px,6vw,88px) 0 0}
+  .hero-row{display:grid;grid-template-columns:minmax(0,1.1fr) auto;gap:24px 48px;align-items:end;margin:clamp(28px,4vw,48px) 0 clamp(36px,5vw,64px)}
+  .sub{font-size:clamp(1.05rem,1.4vw,1.25rem);color:var(--muted);max-width:52ch}
+  .hero-cta{display:flex;gap:10px;flex-wrap:wrap}
+  @media (max-width:860px){ .hero-row{grid-template-columns:1fr;align-items:start} }
+
+  /* Section head */
+  .head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:clamp(32px,5vw,64px)}
+  .note{font-size:15px;color:var(--muted);margin-bottom:18px}
+
+  /* Approach */
+  .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(24px,3vw,48px);margin-top:clamp(40px,6vw,80px)}
+  .col{border-top:1px solid var(--ink);padding-top:18px}
+  .col h3{font-family:var(--sans);font-size:1.05rem}
+  .col p{font-size:15px;color:var(--muted);margin-top:10px}
+  @media (max-width:980px){ .cols{grid-template-columns:1fr 1fr} }
+  @media (max-width:560px){ .cols{grid-template-columns:1fr} }
+
+  /* Work */
+  .work{display:grid;gap:clamp(48px,7vw,96px)}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,40px)}
+  .case-info{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 48px;margin-top:20px;align-items:start}
+  .pair .case-info{grid-template-columns:1fr}
+  .tags{font-size:13px;color:var(--muted);margin-bottom:8px}
+  .case h3{font-family:var(--serif);font-size:clamp(1.7rem,2.6vw,2.3rem);letter-spacing:-.01em;margin-bottom:8px}
+  .case p.desc{font-size:15px;color:var(--muted);max-width:56ch}
+  .stats{display:flex;gap:32px}
+  .stat b{display:block;font-family:var(--serif);font-size:2.2rem;font-weight:500;line-height:1;color:var(--accent)}
+  .stat span{display:block;font-size:13px;color:var(--muted);margin-top:6px}
+  @media (max-width:760px){
+    .pair{grid-template-columns:1fr}
+    .case-info{grid-template-columns:1fr}
+  }
+
+  /* Content strip */
+  .arrows{display:flex;gap:8px}
+  .arrow{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;font-size:18px;transition:border-color .2s,background .2s}
+  .arrow:hover{border-color:var(--ink);background:rgba(74,60,52,.05)}
+  .strip{display:flex;gap:clamp(12px,1.6vw,20px);overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:14px;scrollbar-width:thin;scrollbar-color:var(--sand-deep) transparent}
+  .strip .media{flex:0 0 clamp(210px,24vw,340px);scroll-snap-align:start}
+
+  /* Before / After */
+  .ba{position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;user-select:none;-webkit-user-select:none;background:var(--sand)}
+  @media (max-width:700px){ .ba{aspect-ratio:4/5} }
+  .ba .media{position:absolute;inset:0;border-radius:0}
+  .ba-top{clip-path:inset(0 50% 0 0)}
+  .ba .ph{background:linear-gradient(135deg,#BDB2A3,#D3CAC0)}
+  .ba-after .ph{background:linear-gradient(135deg,#4A3C34,#3E4A21);color:var(--bg)}
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(86%,460px)}
+  .tile{padding:22px 12px;border:1px solid rgba(74,60,52,.25);border-radius:var(--radius);font-family:var(--serif);font-size:18px;font-weight:500;color:var(--ink);background:rgba(232,224,213,.5)}
+  .ba-after .tile{border-color:rgba(232,224,213,.3);color:var(--bg);background:rgba(232,224,213,.1)}
+  .ba-label{position:absolute;top:16px;z-index:3;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:500;background:var(--bg);color:var(--ink);pointer-events:none}
+  .ba-label.l1{left:16px}
+  .ba-label.l2{right:16px}
+  .ba-handle{position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:var(--bg);z-index:3;pointer-events:none}
+  .ba-knob{position:absolute;top:50%;left:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 2px 14px rgba(74,60,52,.25)}
+  .ba-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:ew-resize;z-index:4;touch-action:pan-y}
+  .ba-range:focus-visible ~ .ba-handle .ba-knob{outline:2px solid var(--accent);outline-offset:3px}
+  .ba-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:28px}
+  .ba-stats b{display:block;font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:500;line-height:1;color:var(--accent)}
+  .ba-stats span{display:block;font-size:14px;color:var(--muted);margin-top:6px}
+  @media (max-width:640px){ .ba-stats{grid-template-columns:1fr 1fr} }
+
+  /* Numbers */
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,4vw,56px) clamp(24px,4vw,56px)}
+  .metric{border-top:1px solid var(--line);padding-top:18px}
+  .metric b{display:block;font-family:var(--serif);font-size:clamp(2.6rem,5vw,4.2rem);font-weight:500;line-height:1;letter-spacing:-.02em}
+  .metric span{display:block;margin-top:10px;font-size:15px;color:var(--muted);max-width:28ch}
+  @media (max-width:760px){ .metrics{grid-template-columns:1fr 1fr} }
+
+  /* Services */
+  .rows{border-top:1px solid var(--ink)}
+  .row{display:grid;grid-template-columns:1fr 2fr;gap:16px 48px;padding:26px 0;border-bottom:1px solid var(--line)}
+  .row h3{font-family:var(--sans);font-size:1.1rem}
+  .row p{font-size:15px;color:var(--muted);max-width:62ch}
+  .row p.result{color:var(--accent);margin-top:6px}
+  @media (max-width:760px){ .row{grid-template-columns:1fr;gap:8px} }
+
+  /* Process */
+  .process{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(20px,2.4vw,36px)}
+  .step{position:relative;border-top:1px solid var(--line);padding-top:24px}
+  .step::before{content:"";position:absolute;top:-4px;left:0;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .step small{display:block;font-size:13px;color:var(--muted);margin-bottom:10px}
+  .step h3{font-family:var(--sans);font-size:1.05rem;margin-bottom:8px}
+  .step p{font-size:14px;color:var(--muted)}
+  .process-note{margin-top:48px;font-family:var(--serif);font-style:italic;font-size:1.4rem;color:var(--muted)}
+  @media (max-width:1000px){ .process{grid-template-columns:1fr 1fr} }
+  @media (max-width:560px){ .process{grid-template-columns:1fr} }
+
+  /* About */
+  .about{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,6vw,96px);align-items:center}
+  .about p.bio{margin-top:24px;color:var(--muted);max-width:56ch}
+  .principles{margin-top:28px;display:grid;gap:10px;list-style:none}
+  .principles li{display:flex;gap:14px;align-items:baseline;font-size:15px}
+  .principles li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none;transform:translateY(-3px)}
+  @media (max-width:860px){ .about{grid-template-columns:1fr} }
+
+  /* Quotes */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,4vw,56px)}
+  .quote{border-top:1px solid var(--ink);padding-top:22px;display:flex;flex-direction:column;justify-content:space-between;gap:28px}
+  .quote p{font-family:var(--serif);font-size:clamp(1.3rem,1.9vw,1.6rem);line-height:1.35}
+  .quote cite{font-style:normal;font-size:13px;color:var(--muted)}
+  @media (max-width:860px){ .quotes{grid-template-columns:1fr} }
+
+  /* FAQ */
+  .faq{max-width:900px}
+  .faq-item{border-top:1px solid var(--line)}
+  .faq-item:last-child{border-bottom:1px solid var(--line)}
+  .faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;text-align:left;font-family:var(--serif);font-size:clamp(1.25rem,1.9vw,1.6rem);font-weight:500}
+  .faq-q .plus{font-family:var(--sans);font-size:24px;font-weight:300;color:var(--accent);transition:transform .35s var(--ease)}
+  .faq-item.open .plus{transform:rotate(45deg)}
+  .faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
+  .faq-a>div{overflow:hidden}
+  .faq-item.open .faq-a{grid-template-rows:1fr}
+  .faq-a p{color:var(--muted);font-size:16px;max-width:60ch;padding-bottom:24px}
+
+  /* Final */
+  .final{background:var(--ink);color:var(--bg);border-radius:10px;padding:clamp(48px,8vw,110px) clamp(24px,5vw,80px)}
+  .final h2{max-width:16em}
+  .final p{color:rgba(232,224,213,.75);max-width:52ch;margin:24px 0 36px}
+  .final-cta{display:flex;gap:10px;flex-wrap:wrap}
+  .final .btn-primary{background:var(--bg);color:var(--ink)}
+  .final .btn-primary:hover{background:#fff}
+  .final .btn-ghost{border-color:rgba(232,224,213,.3);color:var(--bg)}
+  .final .btn-ghost:hover{border-color:var(--bg)}
+
+  /* Footer */
+  footer{padding:32px 0 56px;border-top:1px solid var(--line)}
+  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+  .foot .links{display:flex;gap:22px}
+  .foot a:hover{color:var(--ink)}
+
+  /* Mobile sticky bar */
+  .sticky-cta{display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:60;gap:10px}
+  .sticky-cta .btn{flex:1}
+  .sticky-cta .btn-primary{box-shadow:0 6px 24px rgba(74,60,52,.25)}
+  .sticky-cta .btn-ghost{background:rgba(232,224,213,.94);border-color:var(--line)}
+  @media (max-width:760px){ .sticky-cta{display:flex} footer{padding-bottom:96px} }
+
+  /* Quiz modal */
+  .overlay{position:fixed;inset:0;z-index:100;background:rgba(74,60,52,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
+  .overlay.open{display:flex;animation:fade .25s var(--ease)}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .modal-card{position:relative;background:var(--bg);border-radius:12px;padding:40px;max-width:560px;width:100%;max-height:90vh;overflow:auto}
+  .modal-card:focus{outline:none}
+  .modal-close{position:absolute;top:14px;right:14px;width:40px;height:40px;font-size:20px;color:var(--muted)}
+  .modal-close:hover{color:var(--ink)}
+  .modal-card h3{font-family:var(--serif);font-size:1.9rem;margin-bottom:6px;padding-right:32px}
+  .modal-card .lead{color:var(--muted);font-size:14px;margin-bottom:22px}
+  .progress{height:2px;background:var(--line);border-radius:2px;margin-bottom:26px;overflow:hidden}
+  .progress span{display:block;height:100%;width:20%;background:var(--accent);transition:width .35s var(--ease)}
+  .q-num{font-size:13px;color:var(--accent);margin-bottom:12px}
+  .q-title{font-family:var(--serif);font-size:1.5rem;font-weight:500;line-height:1.2;margin-bottom:20px}
+  .q-options{display:grid;gap:10px}
+  .q-opt{padding:14px 18px;border-radius:10px;border:1px solid var(--line);text-align:left;font-size:15px;transition:border-color .2s,background .2s}
+  .q-opt:hover{border-color:var(--ink)}
+  .q-opt.selected{border-color:var(--accent);background:rgba(62,74,33,.1)}
+  .q-back{margin-top:20px;font-size:14px;color:var(--muted)}
+  .q-back:hover{color:var(--ink)}
+  .score{font-family:var(--serif);font-size:4rem;line-height:1;color:var(--accent);margin:4px 0 12px}
+  .q-result h4{font-family:var(--serif);font-size:1.7rem;margin-bottom:10px}
+  .q-result p{color:var(--muted);font-size:15px;margin-bottom:24px}
+  .q-result .btn{width:100%}
+
+  /* Lightbox */
+  .box{position:fixed;inset:0;z-index:110;background:rgba(30,24,20,.94);display:none;align-items:center;justify-content:center;padding:clamp(12px,3vw,40px)}
+  .box.open{display:flex;animation:fade .25s var(--ease)}
+  .box-inner{max-width:100%;max-height:100%;display:flex}
+  .box-inner img,.box-inner video{max-width:100%;max-height:calc(100vh - 80px);border-radius:var(--radius);background:#000}
+  .box-close{position:absolute;top:12px;right:16px;width:44px;height:44px;font-size:24px;color:#E8E0D5}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition-duration:.01ms!important;animation-duration:.01ms!important}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo">ARI <span>/</span> RIVELIYA</a>
+    <nav class="nav-links" aria-label="Основная навигация" data-aria-en="Main navigation">
+      <a href="#work" data-en="Work">Работы</a>
+      <a href="#approach" data-en="Approach">Подход</a>
+      <a href="#about" data-en="About">Обо мне</a>
+      <a href="#contact" data-en="Contact">Контакты</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Язык" data-aria-en="Language">
+        <button data-lang="ru" aria-pressed="true">RU</button>
+        <button data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button class="btn btn-primary" data-open-quiz data-en="Book a fit call">Записаться на созвон</button>
+      <button class="burger" id="burger" aria-label="Меню" data-aria-en="Menu" aria-expanded="false" aria-controls="menu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<nav class="menu" id="menu" hidden aria-label="Мобильное меню" data-aria-en="Mobile menu">
+  <a href="#work" data-en="Work">Работы</a>
+  <a href="#approach" data-en="Approach">Подход</a>
+  <a href="#about" data-en="About">Обо мне</a>
+  <a href="#contact" data-en="Contact">Контакты</a>
+</nav>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap">
+    <h1 data-en="Social media that people recognize without the logo.">Соцсети, которые узнают без логотипа.</h1>
+    <div class="hero-row">
+      <p class="sub" data-en="I build social systems for retail and lifestyle brands: visual code, voice, content engine, paid creative and team rituals. 5 years. $500k+ in managed budgets.">Строю системы для соцсетей ритейла и lifestyle-брендов: визуальный код, голос бренда, контент-стратегия,  Influencer Marketing. 5 лет опыта, бюджеты 6000$</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" data-open-quiz data-en="Find your collaboration format">Подобрать формат сотрудничества</button>
+        <a class="btn btn-ghost" href="https://t.me/pssbsm" target="_blank" rel="noopener">Telegram @pssbsm</a>
+      </div>
+    </div>
+    <div class="media r-hero" data-src="media/hero.mp4" data-poster="media/hero.jpg" data-box data-autoplay></div>
+  </div>
+</section>
+
+<!-- ============ APPROACH ============ -->
+<section class="section" id="approach">
+  <div class="wrap">
+    <p class="note" data-en="Most social media is not a system. It’s a cost.">Большинство соцсетей — не система, а статья расходов.</p>
+    <h2 data-en="I build the system that makes social media recognizable — and measurable.">Я строю систему, в которой соцсети узнаваемы — и измеримы.</h2>
+    <div class="cols">
+      <div class="col"><h3 data-en="Brand code">Код бренда</h3><p data-en="Visual language, tone of voice, content pillars. The things people recognize without a logo.">Визуальный язык, тон голоса, контентные столпы. То, что узнают без логотипа.</p></div>
+      <div class="col"><h3 data-en="Content engine">контент-стратегия</h3><p data-en="Series, formats, production rituals. Always-on and launch cycles.">Рубрики, форматы, производственные ритуалы. Постоянный поток и запуски.</p></div>
+      <div class="col"><h3 data-en="Paid creative"> Influencer Marketing</h3><p data-en="Test matrices, UGC, motion, static. Scale what works. Kill what doesn’t.">Матрицы тестов, UGC, моушн, статика. Масштабируем то, что работает, отключаем то, что нет.</p></div>
+      <div class="col"><h3 data-en="Team & rituals">Команда и ритуалы</h3><p data-en="Roles, sprints, dashboards, reporting. A system that survives without me.">Роли, спринты, дашборды, отчётность. Система, которая работает и без меня.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORK ============ -->
+<section class="section" id="work" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><h2 data-en="Selected work">Избранные работы</h2></div>
+    <div class="work">
+
+      <article class="case">
+        <div class="media r-169" data-src="media/case-1.mp4" data-poster="media/case-1.jpg" data-box data-autoplay></div>
+        <div class="case-info">
+          <div>
+            <div class="tags" data-en="Rebrand · Content system · Paid">Ребрендинг · Контент-система · Платное продвижение</div>
+            <h3 data-en="Federal Retail Rebrand">Ребрендинг федерального ритейлера</h3>
+            <p class="desc" data-en="From 7 inconsistent templates to one unified grid, three content series, and 2× brand awareness.">От 7 несогласованных шаблонов к единой сетке, трём контентным рубрикам и двукратному росту узнаваемости бренда.</p>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>2×</b><span data-en="brand awareness">узнаваемость бренда</span></div>
+            <div class="stat"><b>2,4%</b><span data-en="engagement rate">вовлечённость</span></div>
+          </div>
+        </div>
+      </article>
+
+      <div class="pair">
+        <article class="case">
+          <div class="media r-45" data-src="media/case-2.mp4" data-poster="media/case-2.jpg" data-box data-autoplay></div>
+          <div class="case-info">
+            <div>
+              <div class="tags" data-en="Launch · Paid social · UGC">Запуск · Платный social · UGC</div>
+              <h3 data-en="Lifestyle E-commerce Launch">Запуск lifestyle e-commerce</h3>
+              <p class="desc" data-en="90-day launch engine. 1.8M organic reach. Lower CPM. Higher repeat purchase.">Запускающий движок на 90 дней. 1,8 млн органического охвата. Ниже CPM, выше доля повторных покупок.</p>
+            </div>
+            <div class="stats">
+              <div class="stat"><b>−34%</b><span>CPM</span></div>
+              <div class="stat"><b>+18%</b><span data-en="repeat purchase">повторные покупки</span></div>
+            </div>
+          </div>
+        </article>
+        <article class="case">
+          <div class="media r-45" data-src="media/case-3.mp4" data-poster="media/case-3.jpg" data-box data-autoplay></div>
+          <div class="case-info">
+            <div>
+              <div class="tags" data-en="B2B · Organic · Thought leadership">B2B · Органика · Экспертный контент</div>
+              <h3 data-en="B2B Service Authority">Экспертный бренд B2B-сервиса</h3>
+              <p class="desc" data-en="Founder-led LinkedIn & Telegram. 4.2× inbound leads. 6-week shorter sales cycle.">Личный бренд основателя в LinkedIn и Telegram. В 4,2× больше входящих лидов, цикл продаж короче на 6 недель.</p>
+            </div>
+            <div class="stats">
+              <div class="stat"><b>4,2×</b><span data-en="inbound leads">входящих лидов</span></div>
+              <div class="stat"><b data-en="-6 wks">−6 нед.</b><span data-en="sales cycle">цикл продаж</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <article class="case">
+        <div class="media r-169" data-src="media/case-4.mp4" data-poster="media/case-4.jpg" data-box data-autoplay></div>
+        <div class="case-info">
+          <div>
+            <div class="tags" data-en="Internal comms · Brand system">Внутренние коммуникации · Система бренда</div>
+            <h3 data-en="Internal Ad Channels">Внутренние рекламные каналы</h3>
+            <p class="desc" data-en="Branded system for internal comms and creative support for external video products.">Брендированная система внутренних коммуникаций и креативная поддержка внешних видеопродуктов.</p>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>78%</b><span data-en="read rate">доля прочтений</span></div>
+            <div class="stat"><b>3×</b><span data-en="employee UGC">UGC сотрудников</span></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTENT STRIP ============ -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <h2 data-en="From the feed">Из ленты</h2>
+      <div class="arrows">
+        <button class="arrow" data-dir="-1" aria-label="Назад" data-aria-en="Previous">←</button>
+        <button class="arrow" data-dir="1" aria-label="Вперёд" data-aria-en="Next">→</button>
+      </div>
+    </div>
+    <div class="strip" id="strip" tabindex="0">
+      <div class="media r-916" data-src="media/reel-1.mp4" data-poster="media/reel-1.jpg" data-box data-autoplay></div>
+      <div class="media r-916" data-src="media/reel-2.mp4" data-poster="media/reel-2.jpg" data-box data-autoplay></div>
+      <div class="media r-916" data-src="media/reel-3.mp4" data-poster="media/reel-3.jpg" data-box data-autoplay></div>
+      <div class="media r-916" data-src="media/reel-4.mp4" data-poster="media/reel-4.jpg" data-box data-autoplay></div>
+      <div class="media r-916" data-src="media/reel-5.mp4" data-poster="media/reel-5.jpg" data-box data-autoplay></div>
+      <div class="media r-916" data-src="media/reel-6.mp4" data-poster="media/reel-6.jpg" data-box data-autoplay></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BEFORE / AFTER ============ -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><h2 data-en="Before / After: how I rebuilt a brand’s social code.">Было / Стало: как я пересобрала соцкод бренда.</h2></div>
+    <div class="ba" id="ba">
+      <div class="media ba-after" data-src="media/after.jpg">
+        <div class="ph"><div class="tiles">
+          <div class="tile" data-en="one grid">единая сетка</div>
+          <div class="tile" data-en="olive accent">оливковый акцент</div>
+          <div class="tile" data-en="3 series">3 рубрики</div>
+          <div class="tile">2,4% ER</div>
+        </div></div>
+      </div>
+      <div class="media ba-top" id="baTop" data-src="media/before.jpg">
+        <div class="ph"><div class="tiles">
+          <div class="tile" data-en="7 fonts">7 шрифтов</div>
+          <div class="tile" data-en="no palette">нет палитры</div>
+          <div class="tile" data-en="random posts">случайные посты</div>
+          <div class="tile">0,8% ER</div>
+        </div></div>
+      </div>
+      <span class="ba-label l1" data-en="Before">Было</span>
+      <span class="ba-label l2" data-en="After">Стало</span>
+      <input class="ba-range" id="baRange" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после" data-aria-en="Before and after comparison" />
+      <div class="ba-handle" id="baHandle"><span class="ba-knob">⇔</span></div>
+    </div>
+    <div class="ba-stats">
+      <div><b>+112%</b><span data-en="brand recall">запоминаемость бренда</span></div>
+      <div><b>2,4×</b><span data-en="engagement">вовлечённость</span></div>
+      <div><b>−37%</b><span>CPM</span></div>
+      <div><b>+68%</b><span data-en="saves">сохранения</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NUMBERS ============ -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><h2 data-en="Not impressions. Outcomes.">Не охваты. Результаты.</h2></div>
+    <div class="metrics">
+      <div class="metric"><b>2×</b><span data-en="brand awareness in social">узнаваемость бренда в соцсетях</span></div>
+      <div class="metric"><b>$5M+</b><span data-en="managed media budgets">медиабюджетов в управлении</span></div>
+      <div class="metric"><b data-en="8 yrs">8 лет</b><span data-en="in SMM, content, and paid creative">в SMM, контенте и платных креативах</span></div>
+      <div class="metric"><b>12</b><span data-en="person team led">человек в команде</span></div>
+      <div class="metric"><b>3</b><span data-en="content series launched per quarter">контентные рубрики запускаю за квартал</span></div>
+      <div class="metric"><b>40+</b><span data-en="creative tests per month">креативных тестов в месяц</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><h2 data-en="What I do.">Что я делаю.</h2></div>
+    <div class="rows">
+      <div class="row"><h3 data-en="Social audit & strategy">Аудит и стратегия</h3><div><p data-en="10-day diagnostic. Channel audit, competitor gaps, content thesis, KPI tree.">10-дневная диагностика. Аудит каналов, разрывы у конкурентов, контентный тезис, дерево KPI.</p><p class="result" data-en="Output: leak map + roadmap">Результат: карта утечек и дорожная карта</p></div></div>
+      <div class="row"><h3 data-en="Brand social system">Соцсистема бренда</h3><div><p data-en="Visual code, tone of voice, content pillars, series, templates.">Визуальный код, тон голоса, контентные столпы, рубрики, шаблоны.</p><p class="result" data-en="Output: brand social kit">Результат: social-kit бренда</p></div></div>
+      <div class="row"><h3 data-en="Content production">Продакшн контента</h3><div><p data-en="Always-on and launch. Scripts, shoots, editing, publishing.">Постоянный поток и запуски. Сценарии, съёмки, монтаж, публикация.</p><p class="result" data-en="Output: shipped content">Результат: готовый контент</p></div></div>
+      <div class="row"><h3 data-en="Paid creative"> Influencer Marketing</h3><div><p data-en="Test matrices, UGC, motion, static. Scale what works.">Матрицы тестов, UGC, моушн, статика. Масштабируем то, что работает.</p><p class="result" data-en="Output: predictable acquisition">Результат: предсказуемое привлечение</p></div></div>
+      <div class="row"><h3 data-en="Team leadership">Руководство командой</h3><div><p data-en="Hiring, roles, sprint rituals, dashboards, training.">Найм, роли, ритуалы спринтов, дашборды, обучение.</p><p class="result" data-en="Output: system that survives without me">Результат: система, которая живёт без меня</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><h2 data-en="A process built to remove surprises.">Процесс без неприятных сюрпризов.</h2></div>
+    <div class="process">
+      <div class="step"><small data-en="Days 1–7">Дни 1–7</small><h3 data-en="Diagnose">Диагностика</h3><p data-en="Data, interviews, audit. Output: leak map.">Данные, интервью, аудит. Результат: карта утечек.</p></div>
+      <div class="step"><small data-en="Days 8–14">Дни 8–14</small><h3 data-en="Define">Определение</h3><p data-en="Positioning, content thesis, KPI tree. Output: system blueprint.">Позиционирование, контентный тезис, дерево KPI. Результат: чертёж системы.</p></div>
+      <div class="step"><small data-en="Weeks 3–4">Недели 3–4</small><h3 data-en="Design">Дизайн</h3><p data-en="Visual code, voice, templates, series. Output: brand social kit.">Визуальный код, голос, шаблоны, рубрики. Результат: social-kit бренда.</p></div>
+      <div class="step"><small data-en="Weeks 5–8">Недели 5–8</small><h3 data-en="Deploy">Запуск</h3><p data-en="Production, paid tests, publishing. Output: live engine.">Продакшн, платные тесты, публикации. Результат: работающий движок.</p></div>
+      <div class="step"><small data-en="Ongoing">Постоянно</small><h3 data-en="Optimize">Оптимизация</h3><p data-en="Weekly sprints, monthly reports. Output: compounding growth.">Еженедельные спринты, ежемесячные отчёты. Результат: растущий эффект.</p></div>
+    </div>
+    <p class="process-note" data-en="Every week: one dashboard. Every month: one decision. No black boxes.">Каждую неделю — один дашборд. Каждый месяц — одно решение. Никаких чёрных ящиков.</p>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section" id="about" style="padding-top:0">
+  <div class="wrap about">
+    <div class="media r-45" data-src="media/ari.jpg" data-box></div>
+    <div>
+      <h2 data-en="I’m ARI. I build social systems that survive without me.">Я ARI. Строю соцсистемы, которые работают и без меня.</h2>
+      <p class="bio" data-en="8 years in SMM and content. Head of SMM at a federal retailer. Managed $5M+ in budgets. Led teams up to 12. I’ve rebuilt channels from chaotic to recognizable, launched content engines, and turned paid social into a measurable acquisition channel. I don’t sell posts. I build the machine that makes posts work.">8 лет в SMM и контенте. Head of SMM в федеральном ритейлере. Управляла бюджетами $5M+. Руководила командами до 12 человек. Превращала хаотичные каналы в узнаваемые, запускала контент-движки и делала платный social измеримым каналом привлечения. Я не продаю посты. Я строю машину, благодаря которой посты работают.</p>
+      <ul class="principles">
+        <li data-en="No vanity metrics.">Никаких метрик ради метрик.</li>
+        <li data-en="No stock photo brands.">Никаких брендов на стоках.</li>
+        <li data-en="No disappearing acts.">Никаких исчезновений.</li>
+        <li data-en="No template thinking.">Никакого шаблонного мышления.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTES ============ -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><h2 data-en="Proof, not promises.">Доказательства, а не обещания.</h2></div>
+    <div class="quotes">
+      <figure class="quote"><p data-en="“ARI rebuilt our social channels in 90 days. Brand recall doubled. For the first time, we could see what worked.”">«ARI пересобрала наши соцсети за 90 дней. Запоминаемость бренда выросла вдвое. Впервые мы увидели, что именно работает».</p><cite data-en="CMO · Federal Retail">CMO · федеральный ритейл</cite></figure>
+      <figure class="quote"><p data-en="“The rare SMM lead who speaks P&L. Budgets became predictable, creative became a system.”">«Редкий SMM-лидер, который говорит на языке P&amp;L. Бюджеты стали предсказуемыми, а креатив — системой».</p><cite data-en="Founder · E-commerce">Основатель · e-commerce</cite></figure>
+      <figure class="quote"><p data-en="“She doesn’t hide behind reports. She ships, measures, and fixes.”">«Она не прячется за отчётами. Она делает, измеряет и исправляет».</p><cite data-en="Head of Brand">Руководитель бренда</cite></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="head"><h2 data-en="Answers before you ask.">Ответы до того, как вы спросите.</h2></div>
+    <div class="faq">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span data-en="How do you avoid wasting budget?">Как вы избегаете слива бюджета?</span><span class="plus" aria-hidden="true">+</span></button>
+        <div class="faq-a"><div><p data-en="We start with a leak map. Every dollar is tied to a hypothesis, a creative test, and a KPI. If a channel doesn’t earn its place, it stops.">Начинаем с карты утечек. Каждый доллар привязан к гипотезе, креативному тесту и KPI. Если канал не оправдывает себя, мы его останавливаем.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span data-en="Will you disappear after onboarding?">Вы пропадёте после онбординга?</span><span class="plus" aria-hidden="true">+</span></button>
+        <div class="faq-a"><div><p data-en="No. Weekly dashboard, monthly decision, direct Telegram access. You always know status, budget, and next move.">Нет. Еженедельный дашборд, ежемесячное решение, прямой доступ в Telegram. Вы всегда знаете статус, бюджет и следующий шаг.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span data-en="Do you use bots?">Вы используете ботов?</span><span class="plus" aria-hidden="true">+</span></button>
+        <div class="faq-a"><div><p data-en="Never. No fake engagement. No bought followers. Only real audience signals — because that’s the only thing that compounds.">Никогда. Никакой накрутки и купленных подписчиков. Только реальные сигналы аудитории — только они дают накопительный эффект.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span data-en="Can you work with our in-house team?">Можете работать с нашей внутренней командой?</span><span class="plus" aria-hidden="true">+</span></button>
+        <div class="faq-a"><div><p data-en="Yes. I plug in as lead, producer, or advisor. I train the team and leave the system — with rituals and documentation.">Да. Подключаюсь как руководитель, продюсер или советник. Обучаю команду и оставляю систему — с ритуалами и документацией.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span data-en="What if we’re not ready for a full system?">А если мы не готовы к полной системе?</span><span class="plus" aria-hidden="true">+</span></button>
+        <div class="faq-a"><div><p data-en="Start with the 10-day audit. You’ll get a roadmap whether we work together or not.">Начните с 10-дневного аудита. Вы получите дорожную карту — независимо от того, будем ли мы работать вместе.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" style="padding-bottom:var(--section)">
+  <div class="wrap">
+    <div class="final">
+      <h2 data-en="If your social media doesn’t look like you, it’s not working for you.">Если ваши соцсети не похожи на вас — они на вас не работают.</h2>
+      <p data-en="Send me your brand and one goal. I’ll reply with the first three moves I’d make. No pitch. No fluff.">Пришлите бренд и одну цель. Я отвечу тремя первыми шагами, которые сделала бы. Без питчей и воды.</p>
+      <div class="final-cta">
+        <button class="btn btn-primary" data-open-quiz data-en="Find your collaboration format">Подобрать формат сотрудничества</button>
+        <a class="btn btn-ghost" href="https://t.me/pssbsm" target="_blank" rel="noopener">Telegram @pssbsm</a>
+        <a class="btn btn-ghost" href="mailto:pssbsm6@gmail.com">pssbsm6@gmail.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div data-en="ARI / RIVELIYA © 2026 · Social systems, not posts.">ARI / RIVELIYA © 2026 · Соцсети как система, а не посты.</div>
+    <div class="links">
+      <a href="https://t.me/pssbsm" target="_blank" rel="noopener">Telegram</a>
+      <a href="mailto:pssbsm6@gmail.com">Email</a>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <button class="btn btn-primary" data-open-quiz data-en="Book a call">Записаться на созвон</button>
+  <a class="btn btn-ghost" href="https://t.me/pssbsm" target="_blank" rel="noopener">Telegram</a>
+</div>
+
+<!-- ============ QUIZ ============ -->
+<div class="overlay" id="quizModal" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+  <div class="modal-card" id="quizCard" tabindex="-1">
+    <button class="modal-close" id="quizClose" aria-label="Закрыть" data-aria-en="Close">✕</button>
+    <h3 id="quizTitle" data-en="Are we a fit?">Подходим ли мы друг другу?</h3>
+    <p class="lead" data-en="5 questions, about a minute.">5 вопросов, около минуты.</p>
+    <div class="progress"><span id="qProgress"></span></div>
+    <div id="qBody"></div>
+  </div>
+</div>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="box" id="box" role="dialog" aria-modal="true" aria-label="Просмотр" data-aria-en="Viewer">
+  <button class="box-close" id="boxClose" aria-label="Закрыть" data-aria-en="Close">✕</button>
+  <div class="box-inner" id="boxInner"></div>
+</div>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+let lang = 'ru';
+const t = (ru, en) => lang === 'ru' ? ru : en;
+
+/* ===== Язык / Language ===== */
+const META = {
+  ru: { title: 'ARI / RIVELIYA — Head of SMM и контент-продюсер | Соцсети как система, а не посты',
+        desc: 'Head of SMM и контент-продюсер: 5 лет опыта, бюджеты 500ка. Строю узнаваемые системы для соцсетей: код бренда, контент-стратегия,  Influencer Marketing.',
+        og: 'Соцсети, которые узнают без логотипа.' },
+  en: { title: 'ARI / RIVELIYA — Head of SMM & Content Producer | Social Systems, Not Posts',
+        desc: 'Head of SMM & Content Producer with 5 years and $5M+ managed. I build recognizable social systems: brand code, content engine, paid creative, and team rituals.',
+        og: 'Social media that people recognize without the logo.' }
+};
+
+function applyLang(l){
+  lang = l;
+  document.documentElement.lang = l;
+  $$('[data-en]').forEach(el => {
+    if (el.dataset.ru === undefined) el.dataset.ru = el.textContent;
+    el.textContent = l === 'en' ? el.dataset.en : el.dataset.ru;
+  });
+  $$('[data-aria-en]').forEach(el => {
+    if (el.dataset.ariaRu === undefined) el.dataset.ariaRu = el.getAttribute('aria-label') || '';
+    el.setAttribute('aria-label', l === 'en' ? el.dataset.ariaEn : el.dataset.ariaRu);
+  });
+  document.title = META[l].title;
+  $('meta[name="description"]').content = META[l].desc;
+  $('meta[property="og:title"]').content = META[l].title.split(' | ')[0];
+  $('meta[property="og:description"]').content = META[l].og;
+  $$('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
+  updateMediaLabels();
+  if ($('#quizModal').classList.contains('open')) renderQuiz();
+  try { localStorage.setItem('lang', l); } catch (e) {}
+}
+$$('.lang button').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+
+/* ===== Мобильное меню ===== */
+const burger = $('#burger'), menu = $('#menu');
+function setMenu(open){
+  menu.hidden = !open;
+  burger.setAttribute('aria-expanded', String(open));
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+burger.addEventListener('click', () => setMenu(menu.hidden));
+$$('#menu a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+window.matchMedia('(min-width:901px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
+
+/* ===== Фото и видео ===== */
+const VIDEO = /\.(mp4|webm|mov|m4v|ogv)(\?.*)?$/i;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const players = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    const v = e.target;
+    if (e.isIntersecting) v.play().catch(() => {}); else v.pause();
+  });
+}, { threshold: 0.35 });
+
+function updateMediaLabels(){
+  $$('.media.loaded[data-box]').forEach(m => m.setAttribute('aria-label', t('Открыть на весь экран', 'Open full screen')));
+}
+
+function initMedia(el){
+  const src = el.dataset.src;
+  if (!src) return;
+  const isVideo = VIDEO.test(src);
+  if (!el.querySelector('.ph')) {
+    const ph = document.createElement('div');
+    ph.className = 'ph';
+    ph.innerHTML = '<span class="ph-icon' + (isVideo ? ' is-video' : '') + '"></span><span>' + src + '</span>';
+    el.appendChild(ph);
+  }
+  const done = node => {
+    el.insertBefore(node, el.firstChild);
+    el.classList.add('loaded');
+    if (el.hasAttribute('data-box')) {
+      el.tabIndex = 0;
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-label', t('Открыть на весь экран', 'Open full screen'));
+    }
+  };
+  if (isVideo) {
+    const v = document.createElement('video');
+    v.muted = true; v.loop = true; v.playsInline = true;
+    v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
+    const auto = el.hasAttribute('data-autoplay') && !reduceMotion;
+    v.preload = auto ? 'auto' : 'metadata';
+    if (el.dataset.poster) v.poster = el.dataset.poster;
+    v.addEventListener('loadedmetadata', () => { done(v); if (auto) players.observe(v); }, { once: true });
+    v.addEventListener('error', () => v.remove(), { once: true });
+    v.src = src;
+  } else {
+    const img = new Image();
+    img.alt = '';
+    img.decoding = 'async';
+    img.addEventListener('load', () => done(img), { once: true });
+    img.addEventListener('error', () => {}, { once: true });
+    img.src = src;
+  }
+}
+$$('.media[data-src]').forEach(initMedia);
+
+/* ===== Просмотр на весь экран ===== */
+const box = $('#box'), boxInner = $('#boxInner');
+let boxOpener = null;
+function openBox(m){
+  const src = m.dataset.src;
+  boxInner.innerHTML = '';
+  let node;
+  if (VIDEO.test(src)) {
+    node = document.createElement('video');
+    node.controls = true; node.autoplay = true; node.playsInline = true; node.loop = true;
+    if (m.dataset.poster) node.poster = m.dataset.poster;
+  } else {
+    node = document.createElement('img');
+    node.alt = '';
+  }
+  node.src = src;
+  boxInner.appendChild(node);
+  boxOpener = m;
+  box.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  $('#boxClose').focus();
+}
+function closeBox(){
+  const v = boxInner.querySelector('video');
+  if (v) v.pause();
+  boxInner.innerHTML = '';
+  box.classList.remove('open');
+  document.body.style.overflow = '';
+  if (boxOpener) boxOpener.focus();
+}
+document.addEventListener('click', e => {
+  const m = e.target.closest('.media.loaded[data-box]');
+  if (m) openBox(m);
+});
+document.addEventListener('keydown', e => {
+  const m = e.target.closest && e.target.closest('.media.loaded[data-box]');
+  if (m && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openBox(m); }
+});
+box.addEventListener('click', e => { if (e.target === box) closeBox(); });
+$('#boxClose').addEventListener('click', closeBox);
+
+/* ===== Лента: стрелки ===== */
+const strip = $('#strip');
+$$('.arrow').forEach(b => b.addEventListener('click', () => {
+  strip.scrollBy({ left: Number(b.dataset.dir) * strip.clientWidth * 0.8, behavior: reduceMotion ? 'auto' : 'smooth' });
+}));
+
+/* ===== FAQ ===== */
+$$('.faq-q').forEach(q => q.addEventListener('click', () => {
+  const item = q.parentElement;
+  const open = item.classList.contains('open');
+  $$('.faq-item').forEach(i => { i.classList.remove('open'); $('.faq-q', i).setAttribute('aria-expanded', 'false'); });
+  if (!open) { item.classList.add('open'); q.setAttribute('aria-expanded', 'true'); }
+}));
+
+/* ===== Было / Стало ===== */
+(function(){
+  const range = $('#baRange'), top = $('#baTop'), handle = $('#baHandle');
+  const set = v => {
+    top.style.clipPath = 'inset(0 ' + (100 - v) + '% 0 0)';
+    handle.style.left = v + '%';
+  };
+  range.addEventListener('input', () => set(Number(range.value)));
+  set(50);
+})();
+
+/* ===== Квиз ===== */
+// Вариант: [баллы, русский, английский]; вопрос: [русский, английский]
+const QUIZ = [
+  { q: ['Как лучше описать социальные сети?', 'How would you best describe your social media?'],
+    o: [[5, 'Хаотичные', 'Chaotic'], [10, 'Стабильно, но без системы', 'Stable, but no system'], [15, 'Растут', 'Growing'], [20, 'С нуля', 'Starting from scratch']] },
+  { q: ['Вашим социальным сетям не хватает?', 'What are your social media missing?'],
+    o: [[5, 'Стратегии', 'Strategy'], [10, 'Креатива', 'Creative'], [20, 'Коллабораций', 'Collaborations'], [15, 'Отчётности', 'Reporting']] },
+  { q: ['Социальные сети для развития?', 'Which platforms do you want to grow?'],
+    o: [[10, 'Instagram / TikTok', 'Instagram / TikTok'], [15, 'VK', 'VK'], [15, 'Telegram', 'Telegram'], [15, 'YouTube', 'YouTube'], [20, 'Несколько платформ', 'Multiple platforms']] },
+  { q: ['Ежемесячный бюджет на продвижение?', 'Monthly promotion budget?'],
+    o: [[5, 'До 50 000 ₽', 'Up to ₽50,000'], [10, 'До 100 000 ₽', 'Up to ₽100,000'], [15, 'До 200 000 ₽', 'Up to ₽200,000'], [20, 'Более 200 000 ₽', 'Over ₽200,000']] },
+  { q: ['Предполагаемый срок сотрудничества для развития соц. сетей?', 'Expected collaboration period for growing your social media?'],
+    o: [[10, 'До 3 месяцев', 'Up to 3 months'], [15, 'До 6 месяцев', 'Up to 6 months'], [20, 'Долгосрочное сотрудничество', 'Long-term collaboration']] }
+];
+const modal = $('#quizModal'), qBody = $('#qBody'), qProgress = $('#qProgress');
+let qs = { step: 0, answers: [], locked: false };
+let quizOpener = null, tick = null;
+
+function openQuiz(e){
+  quizOpener = e && e.currentTarget || null;
+  qs = { step: 0, answers: [], locked: false };
+  setMenu(false);
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderQuiz();
+  $('#quizCard').focus();
+}
+function closeQuiz(){
+  clearInterval(tick);
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+  if (quizOpener) quizOpener.focus();
+}
+$$('[data-open-quiz]').forEach(b => b.addEventListener('click', openQuiz));
+$('#quizClose').addEventListener('click', closeQuiz);
+modal.addEventListener('click', e => { if (e.target === modal) closeQuiz(); });
+
+function totalScore(){
+  return qs.answers.reduce((sum, k, i) => sum + QUIZ[i].o[k][0], 0);
+}
+
+function renderQuiz(){
+  clearInterval(tick);
+  const n = QUIZ.length, i = qs.step, qi = lang === 'ru' ? 0 : 1, oi = lang === 'ru' ? 1 : 2;
+  qProgress.style.width = (Math.min(i + 1, n) / n * 100) + '%';
+  if (i < n) {
+    const s = QUIZ[i];
+    qBody.innerHTML =
+      '<div class="q-num">' + t('Вопрос', 'Question') + ' ' + (i + 1) + ' ' + t('из', 'of') + ' ' + n + '</div>' +
+      '<div class="q-title">' + s.q[qi] + '</div>' +
+      '<div class="q-options">' + s.o.map((o, k) =>
+        '<button class="q-opt' + (qs.answers[i] === k ? ' selected' : '') + '" data-k="' + k + '">' + o[oi] + '</button>').join('') + '</div>' +
+      (i > 0 ? '<button class="q-back">' + t('← Назад', '← Back') + '</button>' : '');
+  } else {
+    const s = totalScore();
+    let verdict, msg, cta, href;
+    if (s >= 80) {
+      verdict = t('Готовы к системе.', 'System-ready.');
+      msg = t('У вас уже есть масштаб и намерение. Давайте распишем первые 90 дней и построим систему вместе.', 'You already have the scale and the intent. Let’s map the first 90 days and build the system together.');
+      cta = t('Записаться на созвон', 'Book a fit call');
+      href = 'https://t.me/pssbsm';
+    } else if (s >= 50) {
+      verdict = t('Сначала аудит.', 'Audit first.');
+      msg = t('Начните с 30-минутного аудита: разбор текущей ситуации бренда, определение точки роста и приоритетных задач. Вы получите первичное понимание, что стоит улучшить и с чего начать сотрудничество с SMM-специалистом.', 'Start with a 30-minute audit: a review of your brand’s current situation, the growth point, and priority tasks. You’ll get an initial understanding of what to improve and where to start working with an SMM specialist.');
+      cta = t('Запросить аудит', 'Request the audit');
+      href = 'mailto:pssbsm6@gmail.com?subject=' + encodeURIComponent(t('Заявка на аудит соцсетей', 'Social Audit Request'));
+    } else {
+      verdict = t('Пока рано.', 'Not a fit yet.');
+      msg = t('Вы в начале пути. Сначала — один канал, один контентный тезис, один измеримый KPI. Возвращайтесь, когда будете готовы.', 'You’re early. Here’s what to fix first: one channel, one content thesis, one measurable KPI. Come back when ready.');
+      cta = t('Получить чек-лист', 'Get the checklist');
+      href = 'https://t.me/pssbsm';
+    }
+    qBody.innerHTML =
+      '<div class="q-result"><div class="q-num">' + t('Ваш результат', 'Your score') + '</div>' +
+      '<div class="score" id="qScore">0</div><h4>' + verdict + '</h4><p>' + msg + '</p>' +
+      '<a class="btn btn-primary" href="' + href + '" target="_blank" rel="noopener">' + cta + '</a></div>' +
+      '<button class="q-back">' + t('← Пройти заново', '← Start over') + '</button>';
+    const el = $('#qScore');
+    const stepBy = Math.max(1, Math.round(s / 25));
+    let cur = 0;
+    tick = setInterval(() => {
+      cur += stepBy;
+      if (cur >= s) { cur = s; clearInterval(tick); }
+      el.textContent = cur;
+    }, 24);
+  }
+}
+
+qBody.addEventListener('click', e => {
+  const opt = e.target.closest('.q-opt');
+  if (opt) {
+    if (qs.locked) return;
+    qs.locked = true;
+    const i = qs.step;
+    qs.answers[i] = Number(opt.dataset.k);
+    $$('.q-opt', qBody).forEach(o => o.classList.toggle('selected', o === opt));
+    setTimeout(() => { qs.step = i + 1; qs.locked = false; renderQuiz(); }, 220);
+    return;
+  }
+  if (e.target.closest('.q-back')) {
+    if (qs.step >= QUIZ.length) { qs = { step: 0, answers: [], locked: false }; }
+    else { qs.step = Math.max(0, qs.step - 1); }
+    renderQuiz();
+  }
+});
+
+/* ===== Esc ===== */
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (box.classList.contains('open')) closeBox();
+  else if (modal.classList.contains('open')) closeQuiz();
+  else if (!menu.hidden) setMenu(false);
+});
+
+/* ===== Старт: русский по умолчанию, выбор языка запоминается ===== */
+let saved = 'ru';
+try { saved = localStorage.getItem('lang') || 'ru'; } catch (e) {}
+applyLang(saved === 'en' ? 'en' : 'ru');
+</script>
+</body>
+</html>
